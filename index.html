@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لواحد سليمانيه</title>
+    <title>لواحد سليمانية</title>
     <style>
         * {
             margin: 0;
@@ -93,34 +93,27 @@
         }
 
         .bitmoji-container {
-            width: 280px;
-            height: 280px;
+            width: 200px;
+            height: 350px;
             margin: 0 auto 30px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4a90e2 0%, #7bb3e8 50%, #a8d5f5 100%);
-            padding: 8px;
-            box-shadow: 0 20px 60px rgba(74, 144, 226, 0.5);
-            animation: pulse 2s ease-in-out infinite;
             position: relative;
+            animation: sway 3s ease-in-out infinite;
+            filter: drop-shadow(0 15px 40px rgba(74, 144, 226, 0.3));
         }
 
-        @keyframes pulse {
+        @keyframes sway {
             0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 20px 60px rgba(74, 144, 226, 0.5);
+                transform: translateX(-15px) rotate(-3deg);
             }
             50% {
-                transform: scale(1.05);
-                box-shadow: 0 25px 70px rgba(74, 144, 226, 0.7);
+                transform: translateX(15px) rotate(3deg);
             }
         }
 
         .bitmoji-container img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            background: white;
+            object-fit: contain;
         }
 
         .name {
@@ -240,17 +233,17 @@
             <img src="https://cdn.discordapp.com/attachments/1000869028606255115/1453067543114678425/D974359F-4D20-42B8-90DD-1DD9F9109AE4.png?ex=694c1a1a&is=694ac89a&hm=de5f5a04465dd7bad64a9f356ae6968772132e8c12d57d5bf4030d1bdd7d46a6&" alt="Bitmoji" id="bitmojiImg">
         </div>
 
-        <div class="name">نويره</div>
+        <div class="name">نويرة</div>
         
-        <div class="hearts-decoration">🩵🩵🩵</div>
+        <div class="hearts-decoration">💖 💕 💖</div>
 
         <div class="snapchat-info">
             <div class="snap-icon">👻</div>
-            <div class="username">@sea1b</div>
+            <div class="username">sea1b@</div>
         </div>
 
         <div class="message">
-           نويره واحد اسليمانيه وواحد عالم
+         نويره واحد اسليمانيه وواحد عالم
         </div>
 
         <div class="developer">Developer by Hussein 👨‍💻</div>
