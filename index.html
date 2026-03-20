@@ -4,19 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تهنئة خاصة | رسالة معدة لكِ</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --primary: #ff2e63; --dark-bg: #0f0c29; }
+        body {
+            margin: 0; font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+            color: white; overflow: hidden; position: relative;
+        }
+        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        .card {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px 20px;
+            border-radius: 25px; width: 85%; max-width: 350px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: fadeIn 0.8s ease-out;
+        }
+        .icon { font-size: 50px; margin-bottom: 20px; animation: pulse 2s infinite; }
+        h1 { font-size: 1.6rem; background: linear-gradient(to right, #ff2e63, #ff9a9e);
+             -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px; min-height: 60px; }
+        .btn {
+            background: var(--primary); color: white; border: none; padding: 12px 35px;
+            border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 46, 99, 0.4);
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 46, 99, 0.6); }
+        .hidden { display: none; }
+        .heart { position: absolute; color: rgba(255, 46, 99, 0.5); user-select: none; pointer-events: none; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        #music-container { margin: 20px 0; }
+        audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
+        .signature { font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); margin-top: 15px; font-style: italic; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 10px; }
+    </style>
 </head>
 <body>
 
     <div id="particles-js"></div>
 
     <div id="main-container">
-        <div id="step1" class="card fade-in">
+        <div id="step1" class="card">
             <div class="icon">✉️</div>
             <h1>رسالة معدة خصيصاً لكِ</h1>
-            <p>اضغطي لفتح مفاجأة العيد..</p>
+            <p>بمناسبة عيد الفطر السعيد..</p>
             <button class="btn" onclick="startExperience()">افتحي الرسالة</button>
         </div>
 
@@ -34,10 +67,61 @@
                 </audio>
             </div>
             <div class="signature">من حسين ❤️</div>
-            <button class="btn reset-btn" onclick="location.reload()">إعادة العرض</button>
+            <button class="btn" onclick="location.reload()" style="background:#555; margin-top:10px;">إعادة العرض</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const greetingText = "عيد فطر مبارك يا سعيدة الحظ ✨.. العيد لا الجمعة ولا السبت، العيد هو يوم رؤيتكِ بخير دائماً. ❤️";
+        let charIndex = 0;
+
+        function startExperience() {
+            document.getElementById('step1').classList.add('hidden');
+            const s2 = document.getElementById('step2');
+            s2.classList.remove('hidden');
+            typeWriter();
+        }
+
+        function typeWriter() {
+            const display = document.getElementById("typewriter");
+            if (charIndex < greetingText.length) {
+                display.innerHTML += greetingText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 70);
+            } else {
+                document.getElementById("nextBtn").classList.remove('hidden');
+            }
+        }
+
+        function showMusicPage() {
+            document.getElementById('step2').classList.add('hidden');
+            const s3 = document.getElementById('step3');
+            s3.classList.remove('hidden');
+            document.getElementById('bgMusic').play();
+            
+            // تأثير الانفجار الاحتفالي (Confetti)
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+            (function frame() {
+              confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff2e63', '#ffffff'] });
+              confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff2e63', '#ffffff'] });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const shapes = ['❤️', '✨', '🌙', '⭐'];
+            heart.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+            heart.style.left = Math.random() * 100 + "vw";
+            const duration = Math.random() * 3 + 4;
+            heart.style.animationDuration = duration + "s";
+            heart.style.fontSize = Math.random() * 20 + 15 + "px";
+            document.getElementById('particles-js').appendChild(heart);
+            setTimeout(() => { heart.remove(); }, duration * 1000);
+        }
+        setInterval(createHeart, 400);
+    </script>
 </body>
 </html>
