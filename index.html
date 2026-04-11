@@ -2,934 +2,260 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer By Husein</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إلى آيات الغالية</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+        :root {
+            --sky-blue: #7dd3fc; /* سماوي هادئ وأنيق */
+            --dark-bg: #111827; /* خلفية أسود فخم مائل للكحلي */
+            --card-bg: rgba(31, 41, 55, 0.9); /* درجة أفتح للبطاقة مع شفافية بسيطة للنجوم */
+            --white: #f8fafc;
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .start-screen {
-            text-align: center;
-            z-index: 1000;
-            transition: all 0.5s ease;
-        }
-
-        .start-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.8);
-        }
-
-        .start-btn {
-            background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
-            color: white;
-            border: none;
-            padding: 25px 60px;
-            font-size: 28px;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 40px rgba(157, 78, 221, 0.5);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .start-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(157, 78, 221, 0.7);
-        }
-
-        .start-btn:active {
-            transform: translateY(-2px);
-        }
-
-        .start-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .start-btn:hover::before {
-            left: 100%;
-        }
-
-        .flower-container {
-            position: absolute;
-            width: 100vw;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .flower-container.show {
-            opacity: 1;
-        }
-
-        .bouquet {
+            color: var(--white);
+            overflow: hidden; /* لمنع شريط التمرير من الظهور بسبب النجوم */
             position: relative;
-            width: 500px;
-            height: 500px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        .flower {
+        /* حاوية النجوم في الخلفية */
+        #stars-container {
             position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1; /* خلف المحتوى البارز */
+            overflow: hidden;
         }
 
-        .main-flower {
-            width: 280px;
-            height: 280px;
-            z-index: 5;
-        }
-
-        .small-flower {
-            width: 180px;
-            height: 180px;
-        }
-
-        .small-flower-1 {
-            left: -80px;
-            top: -50px;
-            transform: scale(0.85);
-        }
-
-        .small-flower-2 {
-            right: -80px;
-            top: -30px;
-            transform: scale(0.9);
-        }
-
-        .small-flower-3 {
-            left: -60px;
-            bottom: 20px;
-            transform: scale(0.75);
-        }
-
-        .small-flower-4 {
-            right: -60px;
-            bottom: 40px;
-            transform: scale(0.8);
-        }
-
-        .center {
+        .star {
             position: absolute;
-            background: radial-gradient(circle, #ffd700, #ff9e00);
+            background-color: var(--white);
             border-radius: 50%;
-            z-index: 10;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
-            animation: glow 3s infinite alternate;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            animation: drift linear infinite;
+            opacity: 0.8;
         }
 
-        .main-flower .center {
-            width: 70px;
-            height: 70px;
-            font-size: 36px;
+        @keyframes drift {
+            from { transform: translateY(-10vh); }
+            to { transform: translateY(110vh); }
         }
 
-        .small-flower .center {
-            width: 45px;
-            height: 45px;
-            font-size: 24px;
-        }
-
-        .petal {
-            position: absolute;
-            background: linear-gradient(to bottom, #9d4edd, #7b2cbf, #5a189a);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            transform-origin: 50% 100%;
-            opacity: 0;
-            box-shadow: 
-                inset 0 0 25px rgba(255, 255, 255, 0.4),
-                0 8px 20px rgba(0, 0, 0, 0.4);
+        /* حاوية التصميم المرتبة */
+        .container {
+            width: 85%;
+            max-width: 380px;
+            padding: 40px 25px;
+            background-color: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            text-align: center;
+            position: relative;
+            z-index: 10; /* فوق النجوم */
+            backdrop-filter: blur(5px); /* تأثير ضبابي خفيف خلف البطاقة */
             transition: all 0.5s ease;
-            left: 50%;
-            top: 50%;
         }
 
-        .main-flower .petal {
-            width: 90px;
-            height: 140px;
-        }
-
-        .small-flower .petal {
-            width: 60px;
-            height: 95px;
-        }
-
-        .petal:nth-child(even) {
-            background: linear-gradient(to bottom, #c77dff, #9d4edd, #7b2cbf);
-        }
-
-        .stem {
-            position: absolute;
-            background: linear-gradient(to bottom, #2d6a4f, #40916c, #52b788);
-            border-radius: 0 0 10px 10px;
-            z-index: -1;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .main-flower .stem {
-            width: 16px;
-            height: 280px;
-            top: 280px;
-        }
-
-        .small-flower .stem {
-            width: 10px;
-            height: 200px;
-            top: 180px;
-        }
-
-        .leaf {
-            position: absolute;
-            background: linear-gradient(to bottom, #40916c, #2d6a4f);
-            border-radius: 50% 0 50% 50%;
-            z-index: -1;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .main-flower .leaf {
-            width: 50px;
-            height: 80px;
-            top: 330px;
-        }
-
-        .small-flower .leaf {
-            width: 35px;
-            height: 55px;
-            top: 230px;
-        }
-
-        .leaf.left {
-            left: calc(50% - 60px);
-            transform: rotate(-30deg);
-        }
-
-        .leaf.right {
-            right: calc(50% - 60px);
-            transform: rotate(30deg) scaleX(-1);
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 20;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-        }
-
-        .message {
-            position: absolute;
-            top: 60px;
-            text-align: center;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        .message.show {
-            opacity: 1;
-        }
-
-        .message h1 {
-            color: #c77dff;
-            font-size: 38px;
-            font-weight: bold;
-            text-shadow: 0 0 20px rgba(199, 125, 255, 0.8);
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .message p {
-            color: #9d4edd;
-            font-size: 18px;
-            font-style: italic;
-            opacity: 0.9;
-            text-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
-        }
-
-        .developer {
-            position: absolute;
-            bottom: 50px;
-            text-align: center;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        .developer.show {
-            opacity: 1;
-        }
-
-        .developer p {
-            color: #9d4edd;
-            font-size: 22px;
+        h1 {
+            color: var(--white);
+            font-size: 1.35rem;
+            margin-bottom: 35px;
+            line-height: 1.6;
             font-weight: 600;
-            text-shadow: 0 0 15px rgba(157, 78, 221, 0.6);
-            letter-spacing: 1px;
         }
 
-        .admin-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(157, 78, 221, 0.3);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            opacity: 0.2;
-            transition: all 0.3s;
-            z-index: 9999;
-            font-size: 20px;
+        h1 span {
+            color: var(--sky-blue);
+            font-weight: 800;
         }
 
-        .admin-btn:hover {
-            opacity: 1;
-            background: rgba(157, 78, 221, 0.8);
-            transform: scale(1.1);
-        }
-
-        .admin-login {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-
-        .admin-login.show {
+        .btn-group {
             display: flex;
+            flex-direction: column;
+            gap: 18px;
         }
 
-        .login-box {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 50px rgba(157, 78, 221, 0.5);
-            text-align: center;
-        }
-
-        .login-box h2 {
-            color: #c77dff;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-
-        .login-box input {
-            width: 250px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 2px solid #9d4edd;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .login-box button {
-            background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 10px;
+        /* أزرار Neat */
+        .btn {
+            padding: 18px;
+            border-radius: 16px;
             cursor: pointer;
-            font-size: 16px;
-            margin: 10px 5px;
-            transition: all 0.3s;
-        }
-
-        .login-box button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(157, 78, 221, 0.6);
-        }
-
-        .admin-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-
-        .admin-panel.show {
+            font-weight: 700;
+            font-size: 1.15rem;
+            transition: 0.3s;
+            border: none;
+            outline: none;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .panel-box {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 50px rgba(157, 78, 221, 0.5);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
+        .btn-sky {
+            background-color: var(--sky-blue);
+            color: var(--dark-bg);
         }
 
-        .panel-box h2 {
-            color: #c77dff;
-            margin-bottom: 20px;
-            font-size: 28px;
+        .btn-outline {
+            background-color: transparent;
+            color: var(--sky-blue);
+            border: 2px solid var(--sky-blue);
         }
 
-        .panel-box textarea {
-            width: 100%;
-            height: 120px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 2px solid #9d4edd;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 18px;
-            resize: none;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .panel-box input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #9d4edd;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 14px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .panel-box button {
-            background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px 5px;
-            transition: all 0.3s;
-        }
-
-        .panel-box button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(157, 78, 221, 0.6);
-        }
-
-        .panel-box small {
-            color: #9d4edd;
-            font-size: 12px;
+        .small-text {
+            font-size: 0.7rem;
             display: block;
-            margin-top: 10px;
+            margin-top: 4px;
+            font-weight: 400;
+            opacity: 0.8;
         }
 
-        .popup-message {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .hidden { display: none; }
+
+        /* زر مبروك */
+        #congratsBtn {
+            background-color: var(--sky-blue);
+            color: var(--dark-bg);
+            padding: 22px;
+            border-radius: 20px;
+            font-size: 1.35rem;
             width: 100%;
-            height: 100%;
-            background: rgba(157, 78, 221, 0.15);
-            backdrop-filter: blur(5px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9998;
-            animation: fadeIn 0.5s ease;
+            border: none;
+            cursor: pointer;
+            font-weight: 800;
+            margin-top: 20px;
         }
 
-        .popup-message.show {
-            display: flex;
-        }
-
-        .popup-content {
-            color: #c77dff;
-            font-size: 48px;
-            font-weight: bold;
+        /* رسالة التهنئة النهائية */
+        #finalMessage {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #e2e8f0;
             text-align: center;
-            text-shadow: 0 0 30px rgba(199, 125, 255, 0.8),
-                         0 0 60px rgba(157, 78, 221, 0.6);
-            padding: 40px;
-            animation: pulse 2s ease infinite;
-            max-width: 80%;
-            line-height: 1.4;
+            max-height: 70vh; /* لمنع النص من الخروج في الشاشات الصغيرة */
+            overflow-y: auto; /* لإضافة تمرير إذا كان النص طويلاً جداً */
+            padding-right: 5px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .header-quote {
+            color: var(--sky-blue);
+            font-size: 1.45rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(125, 211, 252, 0.2);
+            padding-bottom: 15px;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes bloom {
-            0% { 
-                transform: translate(-50%, -100%) rotate(var(--rotate)) scale(0.1); 
-                opacity: 0; 
-            }
-            70% { 
-                opacity: 0.9; 
-            }
-            100% { 
-                transform: translate(-50%, -100%) rotate(var(--rotate)) scale(1); 
-                opacity: 1; 
-            }
-        }
-
-        @keyframes glow {
-            0% { 
-                box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); 
-                transform: scale(1);
-            }
-            100% { 
-                box-shadow: 0 0 35px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 215, 0, 0.6); 
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes sparkle {
-            0% { transform: scale(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: scale(2) rotate(180deg); opacity: 0; }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(1deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-
-        .float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @media (max-width: 768px) {
-            .bouquet {
-                width: 350px;
-                height: 350px;
-            }
-
-            .main-flower {
-                width: 220px;
-                height: 220px;
-            }
-
-            .small-flower {
-                width: 140px;
-                height: 140px;
-            }
-
-            .message h1 {
-                font-size: 24px;
-                padding: 0 20px;
-            }
-
-            .message p {
-                font-size: 14px;
-            }
-
-            .developer p {
-                font-size: 16px;
-            }
-
-            .start-btn {
-                padding: 20px 40px;
-                font-size: 20px;
-            }
-
-            .popup-content {
-                font-size: 32px;
-            }
-        }
+        .note { color: #9ca3af; font-size: 0.9rem; margin-top: 20px; display: block; }
     </style>
 </head>
 <body>
-    <div class="start-screen" id="startScreen">
-        <button class="start-btn" id="startBtn">اضغطي هنا يعيوني انتي ❤️</button>
-    </div>
 
-    <div class="flower-container" id="flowerContainer">
-        <div class="message" id="message">
-            <h1>💜 الناس تشتري الورد وانا ابرمجه الج 💜</h1>
-            <p>Developer By Husein</p>
-        </div>
+    <div id="stars-container"></div>
 
-        <div class="bouquet">
-            <div class="flower main-flower" id="mainFlower">
-                <div class="center">R</div>
-                <div class="stem"></div>
-                <div class="leaf left"></div>
-                <div class="leaf right"></div>
-            </div>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
-            <div class="flower small-flower small-flower-1" id="smallFlower1">
-                <div class="center">R</div>
-                <div class="stem"></div>
-                <div class="leaf left"></div>
-                <div class="leaf right"></div>
-            </div>
-
-            <div class="flower small-flower small-flower-2" id="smallFlower2">
-                <div class="center">R</div>
-                <div class="stem"></div>
-                <div class="leaf left"></div>
-                <div class="leaf right"></div>
-            </div>
-
-            <div class="flower small-flower small-flower-3" id="smallFlower3">
-                <div class="center">R</div>
-                <div class="stem"></div>
-                <div class="leaf left"></div>
-                <div class="leaf right"></div>
-            </div>
-
-            <div class="flower small-flower small-flower-4" id="smallFlower4">
-                <div class="center">R</div>
-                <div class="stem"></div>
-                <div class="leaf left"></div>
-                <div class="leaf right"></div>
-            </div>
-        </div>
-
-        <div class="developer" id="developer">
-            <p></p>
+    <div id="page1" class="container">
+        <h1>هلو <span>آيات</span>، هذا شي بسيط حتى اباركلج بالاعفاء العام ✨</h1>
+        <div class="btn-group">
+            <button class="btn btn-sky" onclick="nextPage()">هلو</button>
+            <button class="btn btn-outline" onclick="nextPage()">
+                <span>هلو</span>
+                <span class="small-text">مو بكيفج لازم تكولين هلو</span>
+            </button>
         </div>
     </div>
 
-    <button class="admin-btn" id="adminBtn">⚙️</button>
-
-    <div class="admin-login" id="adminLogin">
-        <div class="login-box">
-            <h2>🔒 تسجيل الدخول</h2>
-            <input type="password" id="passwordInput" placeholder="أدخل كلمة المرور">
-            <br>
-            <button id="loginBtn">دخول</button>
-            <button id="cancelLoginBtn">إلغاء</button>
+    <div id="page2" class="container hidden">
+        <div id="btnWrapper">
+            <button id="congratsBtn" onclick="showSurprise()">مبروك الاعفاء آيات 🎓</button>
+            <span class="note">اضغطي على الزر</span>
         </div>
+        <div id="finalMessage" class="hidden"></div>
     </div>
-
-    <div class="admin-panel" id="adminPanel">
-        <div class="panel-box">
-            <h2>💜 لوحة التحكم 💜</h2>
-            <input type="text" id="webhookInput" placeholder="Discord Webhook URL" value="https://discord.com/api/webhooks/1445204370399563890/qevf9ZJXE7n0I-K-_q9f7wLD99oIZxDQPnkA5CbeIpxtSpI7-by4uWLnLxNTQGwlh8-s">
-            <small>اتركه فارغاً إذا ما تبي إشعارات Discord</small>
-            <textarea id="messageText" placeholder="اكتب رسالتك هنا..."></textarea>
-            <br>
-            <button id="sendBtn">إرسال الرسالة ✉️</button>
-            <button id="closePanelBtn">إغلاق</button>
-        </div>
-    </div>
-
-    <div class="popup-message" id="popupMessage">
-        <div class="popup-content" id="popupContent"></div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            databaseURL: "https://hussein-58c12-default-rtdb.firebaseio.com"
-        };
+        // دالة إنشاء النجوم والشهب
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const starCount = 60; // عدد النجوم
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // حجم عشوائي للنجوم (من 1 إلى 3 بكسل)
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // موقع أفقي وعمودي عشوائي (لبدء الأنيميشن في أماكن مختلفة)
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = (Math.random() * 100 - 10) + '%'; // يبدأ بعضها خارج الشاشة من الأعلى
+                
+                // مدة عشوائية للأنيميشن (سرعات مختلفة) من 4 إلى 10 ثوانٍ
+                star.style.animationDuration = (Math.random() * 6 + 4) + 's';
+                
+                // تأخير عشوائي لبدء الحركة
+                star.style.animationDelay = (Math.random() * 3) + 's';
 
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+                container.appendChild(star);
+            }
+        }
 
-        async function sendToDiscord(message, type = 'info') {
-            const webhookUrl = document.getElementById('webhookInput')?.value || '';
-            if (!webhookUrl) return;
+        // تشغيل إنشاء النجوم عند تحميل الصفحة
+        window.onload = createStars;
 
-            const colors = {
-                'visitor': 5814783,
-                'message': 10181046,
-                'info': 3447003
-            };
+        function nextPage() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').classList.remove('hidden');
+        }
 
-            const embed = {
-                embeds: [{
-                    title: type === 'visitor' ? '🎉 زائر جديد!' : '📨 رسالة جديدة',
-                    description: message,
-                    color: colors[type],
-                    timestamp: new Date().toISOString(),
-                    footer: {
-                        text: 'Developer By Husein'
+        function showSurprise() {
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log("Audio play blocked"));
+
+            document.getElementById('btnWrapper').style.display = 'none';
+            const finalMsg = document.getElementById('finalMessage');
+            finalMsg.classList.remove('hidden');
+            
+            // نص المعايدة المرتب والمعدل لآيات
+            const text = "ولكل مجتهد نصيب\n\nالف الف مبروك الاعفاء العام آيات وان شاء الله نشوفج باعلى المراتب ومن نجاح الى نجاح وان شاء الله مو اول ولا اخر مره تنعفين وتستمرين بالنجاح ويوم النجاح الاكبر الي هو نجاحج من السادس وتجيبين المعدل الي تريدينه وتفرحين نفسج واهلج واتمنى الج كل التوفيق صح ما صارلي حتى يوم من عرفتج بس حبيت اباركلج بطريقتي الخاصه وبالتوفيق عيوني 💙.";
+            
+            let i = 0;
+            finalMsg.innerHTML = ""; // تأكد من تفريغ المحتوى قبل البدء
+
+            function typeWriter() {
+                if (i < text.length) {
+                    // تمييز الجملة الأولى "ولكل مجتهد نصيب" كعنوان
+                    if (i < 19) {
+                        finalMsg.innerHTML = '<span class="header-quote">' + text.substring(0, i + 1) + '</span>';
+                    } else {
+                        // النص المتبقي بعد العنوان
+                        finalMsg.innerHTML = '<span class="header-quote">ولكل مجتهد نصيب</span>' + text.substring(19, i + 1);
                     }
-                }]
-            };
-
-            try {
-                await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(embed)
-                });
-            } catch (error) {
-                console.error('خطأ في إرسال Discord:', error);
-            }
-        }
-
-        const deviceType = /Mobile|Android|iPhone|iPad|iPod/.test(navigator.userAgent) ? 'موبايل 📱' : 'كمبيوتر 💻';
-
-        console.log('═══════════════════════════════════════');
-        console.log('🎉 زائر جديد دخل الموقع!');
-        console.log('═══════════════════════════════════════');
-        console.log('⏰ الوقت:', new Date().toLocaleString('ar-IQ'));
-        console.log('📱 نوع الجهاز:', deviceType);
-        console.log('🌐 المتصفح:', navigator.userAgent);
-        console.log('📐 حجم الشاشة:', window.innerWidth + 'x' + window.innerHeight);
-        console.log('🌍 اللغة:', navigator.language);
-        console.log('🔥 Firebase متصل بنجاح!');
-        console.log('═══════════════════════════════════════');
-
-        const visitorInfo = `⏰ **الوقت:** ${new Date().toLocaleString('ar-IQ')}\n📱 **نوع الجهاز:** ${deviceType}\n📐 **حجم الشاشة:** ${window.innerWidth}x${window.innerHeight}\n🌍 **اللغة:** ${navigator.language}`;
-
-        database.ref('visitors').push({
-            time: new Date().toLocaleString('ar-IQ'),
-            device: deviceType,
-            screen: `${window.innerWidth}x${window.innerHeight}`,
-            language: navigator.language,
-            timestamp: Date.now()
-        }).then(() => {
-            sendToDiscord(visitorInfo, 'visitor');
-        });
-
-        let currentMessageTimeout = null;
-
-        database.ref('currentMessage').on('value', (snapshot) => {
-            const data = snapshot.val();
-
-            if (currentMessageTimeout) {
-                clearTimeout(currentMessageTimeout);
-                currentMessageTimeout = null;
-            }
-
-            if (data && data.message && data.timestamp) {
-                const timeDiff = Date.now() - data.timestamp;
-
-                if (timeDiff < 10000) {
-                    document.getElementById('popupContent').textContent = data.message;
-                    document.getElementById('popupMessage').classList.add('show');
-                    console.log('📬 تم استقبال رسالة جديدة:', data.message);
-
-                    const remainingTime = 10000 - timeDiff;
-                    currentMessageTimeout = setTimeout(() => {
-                        document.getElementById('popupMessage').classList.remove('show');
-                        database.ref('currentMessage').remove();
-                        console.log('✨ تم إخفاء الرسالة تلقائياً');
-                    }, remainingTime);
-                } else {
-                    document.getElementById('popupMessage').classList.remove('show');
-                    database.ref('currentMessage').remove();
+                    i++;
+                    setTimeout(typeWriter, 40); // سرعة الكتابة (40 مللي ثانية)
+                    finalMsg.scrollTop = finalMsg.scrollHeight; // التمرير تلقائياً لأسفل
                 }
-            } else {
-                document.getElementById('popupMessage').classList.remove('show');
             }
-        });
-
-        const mainFlower = document.getElementById('mainFlower');
-        const smallFlowers = [
-            document.getElementById('smallFlower1'),
-            document.getElementById('smallFlower2'),
-            document.getElementById('smallFlower3'),
-            document.getElementById('smallFlower4')
-        ];
-
-        function createPetals(flower, count) {
-            for (let i = 0; i < count; i++) {
-                const petal = document.createElement('div');
-                petal.classList.add('petal');
-                const rotate = i * (360 / count);
-                petal.style.setProperty('--rotate', `${rotate}deg`);
-                petal.style.transform = `translate(-50%, -100%) rotate(${rotate}deg) scale(0.1)`;
-                flower.insertBefore(petal, flower.firstChild);
-            }
+            typeWriter();
         }
-
-        function createSparkles(flower, count) {
-            for (let i = 0; i < count; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                sparkle.style.left = `${Math.random() * 100}%`;
-                sparkle.style.top = `${Math.random() * 100}%`;
-                sparkle.style.animationDelay = `${Math.random() * 3}s`;
-                flower.appendChild(sparkle);
-            }
-        }
-
-        createPetals(mainFlower, 16);
-        smallFlowers.forEach(sf => createPetals(sf, 12));
-        createSparkles(mainFlower, 20);
-
-        function bloomFlower(flower, delay = 0) {
-            const petals = flower.querySelectorAll('.petal');
-            petals.forEach((petal, index) => {
-                setTimeout(() => {
-                    petal.style.animation = `bloom 1.5s ease-out forwards`;
-                    petal.style.opacity = "1";
-                }, delay + (index * 60));
-            });
-        }
-
-        mainFlower.classList.add('float');
-        smallFlowers.forEach(sf => sf.classList.add('float'));
-
-        document.getElementById('startBtn').addEventListener('click', function() {
-            document.getElementById('startScreen').classList.add('hidden');
-            console.log('✨ تم الضغط على زر البدء');
-
-            setTimeout(() => {
-                document.getElementById('flowerContainer').classList.add('show');
-
-                setTimeout(() => bloomFlower(mainFlower), 400);
-
-                smallFlowers.forEach((sf, index) => {
-                    setTimeout(() => bloomFlower(sf, 0), 1500 + (index * 300));
-                });
-
-                setTimeout(() => {
-                    const sparkles = document.querySelectorAll('.sparkle');
-                    sparkles.forEach(sparkle => {
-                        sparkle.style.animation = `sparkle 2.5s ease-in-out infinite`;
-                    });
-                }, 2000);
-
-                setTimeout(() => {
-                    document.getElementById('message').classList.add('show');
-                }, 3000);
-
-                setTimeout(() => {
-                    document.getElementById('developer').classList.add('show');
-                }, 3500);
-            }, 500);
-        });
-
-        const centers = document.querySelectorAll('.center');
-        centers.forEach(center => {
-            center.addEventListener('mouseover', () => {
-                center.style.transform = 'scale(1.2)';
-            });
-            center.addEventListener('mouseout', () => {
-                center.style.transform = 'scale(1)';
-            });
-        });
-
-        const ADMIN_PASSWORD = "1234";
-
-        document.getElementById('adminBtn').addEventListener('click', () => {
-            document.getElementById('adminLogin').classList.add('show');
-            console.log('🔐 تم فتح نافذة تسجيل الدخول');
-        });
-
-        document.getElementById('cancelLoginBtn').addEventListener('click', () => {
-            document.getElementById('adminLogin').classList.remove('show');
-            document.getElementById('passwordInput').value = '';
-            console.log('❌ تم إغلاق نافذة تسجيل الدخول');
-        });
-
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            const password = document.getElementById('passwordInput').value;
-            if (password === ADMIN_PASSWORD) {
-                document.getElementById('adminLogin').classList.remove('show');
-                document.getElementById('adminPanel').classList.add('show');
-                document.getElementById('passwordInput').value = '';
-                console.log('✅ تم تسجيل الدخول بنجاح!');
-            } else {
-                alert('❌ كلمة المرور خاطئة');
-                console.log('❌ محاولة تسجيل دخول فاشلة');
-            }
-        });
-
-        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById('loginBtn').click();
-                }
-                });document.getElementById('closePanelBtn').addEventListener('click', () => {
-                document.getElementById('adminPanel').classList.remove('show');
-                console.log('📋 تم إغلاق لوحة التحكم');
-            });
-
-            document.getElementById('sendBtn').addEventListener('click', () => {
-                const message = document.getElementById('messageText').value.trim();
-                if (message) {
-                    database.ref('currentMessage').set({
-                        message: message,
-                        timestamp: Date.now()
-                    }).then(() => {
-                        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-                        console.log('📨 تم إرسال رسالة جديدة لجميع الزوار!');
-                        console.log('📝 الرسالة:', message);
-                        console.log('⏰ الوقت:', new Date().toLocaleTimeString('ar-IQ'));
-                        console.log('🔥 تم الإرسال عبر Firebase بنجاح!');
-                        console.log('⏱️ سيتم حذف الرسالة تلقائياً بعد 10 ثواني');
-                        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-
-                        const messageInfo = `📝 **الرسالة:** ${message}\n⏰ **الوقت:** ${new Date().toLocaleString('ar-IQ')}`;
-                        sendToDiscord(messageInfo, 'message');
-
-                        document.getElementById('adminPanel').classList.remove('show');
-                        document.getElementById('messageText').value = '';
-
-                        setTimeout(() => {
-                            database.ref('currentMessage').remove();
-                            console.log('✨ تم حذف الرسالة تلقائياً بعد 10 ثواني');
-                        }, 10000);
-                    }).catch((error) => {
-                        console.error('❌ خطأ في الإرسال:', error);
-                        alert('❌ حدث خطأ في إرسال الرسالة');
-                    });
-                } else {
-                    alert('⚠️ الرجاء كتابة رسالة أولاً');
-                    console.log('⚠️ محاولة إرسال رسالة فارغة');
-                }
-            });
-        </script>
+    </script>
+</body>
+</html>
