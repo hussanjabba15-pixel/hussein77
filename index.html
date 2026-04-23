@@ -1,261 +1,530 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إلى آيات الغالية</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
-
-        :root {
-            --sky-blue: #7dd3fc; /* سماوي هادئ وأنيق */
-            --dark-bg: #111827; /* خلفية أسود فخم مائل للكحلي */
-            --card-bg: rgba(31, 41, 55, 0.9); /* درجة أفتح للبطاقة مع شفافية بسيطة للنجوم */
-            --white: #f8fafc;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--dark-bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: var(--white);
-            overflow: hidden; /* لمنع شريط التمرير من الظهور بسبب النجوم */
-            position: relative;
-        }
-
-        /* حاوية النجوم في الخلفية */
-        #stars-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1; /* خلف المحتوى البارز */
-            overflow: hidden;
-        }
-
-        .star {
-            position: absolute;
-            background-color: var(--white);
-            border-radius: 50%;
-            animation: drift linear infinite;
-            opacity: 0.8;
-        }
-
-        @keyframes drift {
-            from { transform: translateY(-10vh); }
-            to { transform: translateY(110vh); }
-        }
-
-        /* حاوية التصميم المرتبة */
-        .container {
-            width: 85%;
-            max-width: 380px;
-            padding: 40px 25px;
-            background-color: var(--card-bg);
-            border-radius: 28px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(125, 211, 252, 0.2);
-            text-align: center;
-            position: relative;
-            z-index: 10; /* فوق النجوم */
-            backdrop-filter: blur(5px); /* تأثير ضبابي خفيف خلف البطاقة */
-            transition: all 0.5s ease;
-        }
-
-        h1 {
-            color: var(--white);
-            font-size: 1.35rem;
-            margin-bottom: 35px;
-            line-height: 1.6;
-            font-weight: 600;
-        }
-
-        h1 span {
-            color: var(--sky-blue);
-            font-weight: 800;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        /* أزرار Neat */
-        .btn {
-            padding: 18px;
-            border-radius: 16px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1.15rem;
-            transition: 0.3s;
-            border: none;
-            outline: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-sky {
-            background-color: var(--sky-blue);
-            color: var(--dark-bg);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--sky-blue);
-            border: 2px solid var(--sky-blue);
-        }
-
-        .small-text {
-            font-size: 0.7rem;
-            display: block;
-            margin-top: 4px;
-            font-weight: 400;
-            opacity: 0.8;
-        }
-
-        .hidden { display: none; }
-
-        /* زر مبروك */
-        #congratsBtn {
-            background-color: var(--sky-blue);
-            color: var(--dark-bg);
-            padding: 22px;
-            border-radius: 20px;
-            font-size: 1.35rem;
-            width: 100%;
-            border: none;
-            cursor: pointer;
-            font-weight: 800;
-            margin-top: 20px;
-        }
-
-        /* رسالة التهنئة النهائية */
-        #finalMessage {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #e2e8f0;
-            text-align: center;
-            max-height: 70vh; /* لمنع النص من الخروج في الشاشات الصغيرة */
-            overflow-y: auto; /* لإضافة تمرير إذا كان النص طويلاً جداً */
-            padding-right: 5px;
-        }
-
-        .header-quote {
-            color: var(--sky-blue);
-            font-size: 1.45rem;
-            font-weight: 800;
-            display: block;
-            margin-bottom: 25px;
-            border-bottom: 2px solid rgba(125, 211, 252, 0.2);
-            padding-bottom: 15px;
-        }
-
-        .note { color: #9ca3af; font-size: 0.9rem; margin-top: 20px; display: block; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXASTORE — المنتجات الرقمية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d0f1a;--surface:#13162b;--card:#181c35;--border:rgba(120,140,255,0.12);
+  --accent:#7c6dfa;--accent2:#a78bfa;--neon:#5eead4;--gold:#fbbf24;
+  --red:#f87171;--green:#34d399;--text:#e8eaf6;--muted:#6b7280;--tg:#229ED9;
+  --radius:12px;--radius-sm:8px;
+}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+/* ===== LAYOUT ===== */
+.app{display:flex;min-height:100vh}
+.sidebar{width:235px;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:transform .3s}
+.sidebar-logo{padding:22px 18px 18px;border-bottom:1px solid var(--border)}
+.brand{font-size:22px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:1.5px;margin-top:2px}
+.nav{padding:10px 0;flex:1;overflow-y:auto}
+.nav-lbl{font-size:9px;color:var(--muted);padding:10px 18px 4px;letter-spacing:2px}
+.ni{display:flex;align-items:center;gap:10px;padding:11px 18px;cursor:pointer;font-size:13px;color:var(--muted);transition:all .2s;border-right:3px solid transparent}
+.ni:hover,.ni.active{color:var(--text);background:rgba(124,109,250,0.07);border-right-color:var(--accent)}
+.ni.active{color:var(--accent)}
+.ni-ic{font-size:16px;width:20px;text-align:center}
+.ni .cnt{background:var(--accent);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;margin-right:auto}
+.sidebar-foot{padding:14px 18px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);text-align:center}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--surface);padding:13px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:700}
+.topbar-right{display:flex;gap:10px;align-items:center}
+.user-chip{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 12px 5px 6px;cursor:pointer;transition:border-color .2s}
+.user-chip:hover{border-color:var(--accent)}
+.user-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--neon));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.user-name{font-size:12px}
+.page{display:none;flex:1;overflow-y:auto;padding:22px}
+.page.active{display:block}
+/* ===== AUTH ===== */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(8px)}
+.auth-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 32px;width:100%;max-width:420px}
+.auth-logo{text-align:center;margin-bottom:28px}
+.auth-brand{font-size:28px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.auth-tagline{font-size:13px;color:var(--muted);margin-top:4px}
+.auth-tabs{display:flex;background:var(--bg);border-radius:10px;padding:4px;margin-bottom:24px;gap:4px}
+.auth-tab{flex:1;padding:9px;border-radius:7px;border:none;background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.auth-tab.active{background:var(--accent);color:#fff}
+.fgrp{margin-bottom:16px}
+.flbl{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
+.finp{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:11px 14px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.finp:focus{border-color:var(--accent)}
+.finp.error{border-color:var(--red)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:10px;border:none;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;transition:all .2s;width:100%}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#6356d4;transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-google{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.btn-google:hover{border-color:var(--accent)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm{width:auto;padding:7px 16px;font-size:12px}
+.btn-green{background:var(--green);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:18px 0}
+.auth-divider span{font-size:12px;color:var(--muted);white-space:nowrap}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.otp-inputs{display:flex;gap:10px;justify-content:center;margin:16px 0}
+.otp-inp{width:46px;height:52px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:22px;font-weight:700;text-align:center;font-family:'Tajawal',sans-serif;outline:none;transition:border-color .2s}
+.otp-inp:focus{border-color:var(--accent)}
+.err-msg{font-size:12px;color:var(--red);margin-top:6px;display:none}
+.err-msg.show{display:block}
+.success-msg{font-size:13px;color:var(--green);text-align:center;margin-top:8px;display:none}
+.success-msg.show{display:block}
+.auth-back{font-size:12px;color:var(--muted);cursor:pointer;text-align:center;margin-top:14px}
+.auth-back:hover{color:var(--accent)}
+.otp-timer{font-size:12px;color:var(--muted);text-align:center;margin-top:8px}
+/* ===== CARDS / STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat-c{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--border)}
+.stat-lbl{font-size:11px;color:var(--muted);margin-bottom:8px}
+.stat-val{font-size:26px;font-weight:900}
+.stat-val.purple{color:var(--accent)}
+.stat-val.teal{color:var(--neon)}
+.stat-val.gold{color:var(--gold)}
+.stat-val.green{color:var(--green)}
+.stat-delta{font-size:11px;color:var(--green);margin-top:5px}
+/* ===== STORE ===== */
+.hero{background:linear-gradient(135deg,#1a1040,#0f1630,#0d1a2e);border-radius:16px;padding:30px;margin-bottom:22px;text-align:center;border:1px solid var(--border);overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(124,109,250,0.07)}
+.hero-brand{font-size:13px;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,var(--accent),var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.hero-title{font-size:24px;font-weight:900;margin-bottom:8px}
+.hero-sub{font-size:13px;color:var(--muted)}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cat{background:var(--card);border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'Tajawal',sans-serif;transition:all .2s}
+.cat.active,.cat:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.prods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.pc{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:all .25s}
+.pc:hover{transform:translateY(-4px);border-color:rgba(124,109,250,0.4);box-shadow:0 8px 24px rgba(124,109,250,0.08)}
+.pc-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,rgba(124,109,250,0.08),rgba(94,234,212,0.04))}
+.pc-body{padding:14px}
+.pc-name{font-size:13px;font-weight:700;margin-bottom:4px}
+.pc-desc{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+.pc-foot{display:flex;justify-content:space-between;align-items:center}
+.pc-price{font-size:15px;font-weight:900;color:var(--gold)}
+.add-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.add-btn:hover{transform:scale(1.12)}
+.pc-tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.tag{font-size:10px;background:rgba(124,109,250,0.1);color:var(--accent2);padding:2px 8px;border-radius:10px}
+.tag.teal{background:rgba(94,234,212,0.1);color:var(--neon)}
+/* ===== CHECKOUT ===== */
+.section-card{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border);margin-bottom:16px}
+.sec-title{font-size:14px;font-weight:700;margin-bottom:14px}
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.pay-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.pay-opt:hover,.pay-opt.active{border-color:var(--accent);background:rgba(124,109,250,0.07)}
+.pay-ic{font-size:22px;margin-bottom:4px}
+.pay-nm{font-size:12px;font-weight:700}
+.pay-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.del-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.del-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .2s}
+.del-opt:hover,.del-opt.active{border-color:var(--neon);background:rgba(94,234,212,0.05)}
+.del-ic{font-size:24px;margin-bottom:4px}
+.del-nm{font-size:12px;font-weight:700}
+.del-ds{font-size:10px;color:var(--muted);margin-top:2px}
+.ord-num-box{background:linear-gradient(135deg,#2d1bb8,#0f2d6e);border-radius:12px;padding:16px;text-align:center;margin-bottom:16px;border:1px solid rgba(124,109,250,0.2)}
+.ord-lbl{font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:4px}
+.ord-val{font-size:26px;font-weight:900;letter-spacing:4px}
+.upload-area{border:2px dashed var(--border);border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px}
+.upload-area:hover,.upload-area.dragover{border-color:var(--accent);background:rgba(124,109,250,0.04)}
+.upload-area input{display:none}
+.upload-ic{font-size:36px;margin-bottom:8px}
+.upload-txt{font-size:13px;font-weight:700;margin-bottom:4px}
+.upload-sub{font-size:11px;color:var(--muted)}
+.upload-preview{max-width:100%;border-radius:10px;margin-top:12px;display:none}
+.tg-bot-bar{background:rgba(34,158,217,0.07);border:1px solid rgba(34,158,217,0.2);border-radius:10px;padding:14px;margin-bottom:14px}
+.tg-bot-t{font-size:12px;font-weight:700;color:var(--tg);margin-bottom:4px}
+.tg-bot-d{font-size:11px;color:var(--muted);line-height:1.5}
+/* ===== ORDERS TABLE ===== */
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;min-width:700px}
+.tbl th{text-align:right;font-size:11px;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--border);font-weight:500}
+.tbl td{padding:12px;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.tbl tr:hover td{background:rgba(124,109,250,0.03)}
+.bdg{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.bdg-pend{background:rgba(251,191,36,0.12);color:var(--gold)}
+.bdg-done{background:rgba(52,211,153,0.12);color:var(--green)}
+.bdg-cancel{background:rgba(248,113,113,0.12);color:var(--red)}
+.bdg-ship{background:rgba(94,234,212,0.1);color:var(--neon)}
+/* ===== UPLOAD PROOF PREVIEW in admin ===== */
+.proof-thumb{width:48px;height:48px;border-radius:6px;object-fit:cover;cursor:pointer;border:1px solid var(--border)}
+.proof-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:2000}
+.proof-modal-overlay.show{display:flex}
+.proof-modal-img{max-width:90vw;max-height:85vh;border-radius:12px}
+/* ===== ADMIN ===== */
+.admin-gate{display:none}
+/* ===== SUCCESS ===== */
+.success-wrap{text-align:center;padding:30px 20px}
+.success-ic{font-size:54px;margin-bottom:14px}
+.success-t{font-size:20px;font-weight:900;color:var(--green);margin-bottom:6px}
+.success-ord{font-size:22px;font-weight:900;color:var(--gold);margin:10px 0}
+.success-d{font-size:13px;color:var(--muted);line-height:1.7}
+.tg-cta{background:var(--tg);border-radius:10px;padding:13px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;margin:18px auto 0;max-width:320px;transition:opacity .2s}
+.tg-cta:hover{opacity:.88}
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:11px 26px;border-radius:30px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;font-family:'Tajawal',sans-serif;white-space:nowrap}
+.toast.show{opacity:1}
+/* ===== FROW ===== */
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* ===== POLICY ===== */
+.policy-sec{margin-bottom:20px}
+.policy-sec h3{font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:6px}
+.policy-sec p{font-size:12px;color:var(--muted);line-height:1.8}
+.footer-cr{text-align:center;font-size:11px;color:var(--muted);padding:16px;border-top:1px solid var(--border);margin-top:20px}
+.footer-cr b{color:var(--accent)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(124,109,250,0.2);border-radius:2px}
+</style>
 </head>
 <body>
 
-    <div id="stars-container"></div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+<!-- PROOF IMAGE MODAL -->
+<div class="proof-modal-overlay" id="proofModal" onclick="this.classList.remove('show')">
+  <img class="proof-modal-img" id="proofModalImg" src="" alt="إثبات الدفع">
+</div>
 
-    <div id="page1" class="container">
-        <h1>هلو <span>آيات</span>، هذا شي بسيط حتى اباركلج بالاعفاء العام ✨</h1>
-        <div class="btn-group">
-            <button class="btn btn-sky" onclick="nextPage()">هلو</button>
-            <button class="btn btn-outline" onclick="nextPage()">
-                <span>هلو</span>
-                <span class="small-text">مو بكيفج لازم تكولين هلو</span>
-            </button>
-        </div>
+<!-- AUTH OVERLAY -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-brand">NEXASTORE</div>
+      <div class="auth-tagline">متجر المنتجات الرقمية</div>
     </div>
 
-    <div id="page2" class="container hidden">
-        <div id="btnWrapper">
-            <button id="congratsBtn" onclick="showSurprise()">مبروك الاعفاء آيات 🎓</button>
-            <span class="note">اضغطي على الزر</span>
-        </div>
-        <div id="finalMessage" class="hidden"></div>
+    <!-- STEP 1: Login/Register tabs -->
+    <div id="authStep1">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="setAuthTab('login')">تسجيل الدخول</button>
+        <button class="auth-tab" onclick="setAuthTab('register')">حساب جديد</button>
+      </div>
+
+      <!-- Google -->
+      <button class="btn btn-google" onclick="loginGoogle()" style="margin-bottom:16px">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.2 0 5.8 1.1 7.9 3.1l5.9-5.9C34.1 3.4 29.4 1.5 24 1.5 14.8 1.5 6.9 7 3.2 14.9l6.9 5.4C12 14.2 17.6 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v8.7h12.4c-.5 2.9-2.1 5.3-4.5 6.9l7 5.4c4.1-3.8 6.5-9.3 6.5-16.4z"/><path fill="#FBBC05" d="M10.1 28.5c-.4-1.2-.7-2.5-.7-3.8s.2-2.6.6-3.8L3 15.5C1.5 18.4.7 21.6.7 25s.8 6.6 2.3 9.5l7.1-6z"/><path fill="#34A853" d="M24 46.5c5.4 0 9.9-1.8 13.2-4.8l-7-5.4c-1.8 1.2-4.1 2-6.2 2-6.4 0-12-4.7-13.9-11l-6.9 5.3C6.9 41 14.8 46.5 24 46.5z"/></svg>
+        متابعة بحساب Google
+      </button>
+
+      <div class="auth-divider"><span>أو</span></div>
+
+      <div class="fgrp">
+        <label class="flbl">البريد الإلكتروني أو رقم الهاتف</label>
+        <input class="finp" type="text" id="authInput" placeholder="example@email.com أو 07XXXXXXXXX">
+        <div class="err-msg" id="authInputErr">أدخل بريد إلكتروني أو رقم هاتف صحيح</div>
+      </div>
+      <button class="btn btn-primary" id="authSendBtn" onclick="sendOTP()">
+        <span id="authSendLabel">إرسال كود التحقق</span>
+      </button>
+      <div class="success-msg" id="authSentMsg">✅ تم إرسال كود التحقق!</div>
     </div>
 
-    <script>
-        // دالة إنشاء النجوم والشهب
-        function createStars() {
-            const container = document.getElementById('stars-container');
-            const starCount = 60; // عدد النجوم
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                // حجم عشوائي للنجوم (من 1 إلى 3 بكسل)
-                const size = Math.random() * 2 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                
-                // موقع أفقي وعمودي عشوائي (لبدء الأنيميشن في أماكن مختلفة)
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = (Math.random() * 100 - 10) + '%'; // يبدأ بعضها خارج الشاشة من الأعلى
-                
-                // مدة عشوائية للأنيميشن (سرعات مختلفة) من 4 إلى 10 ثوانٍ
-                star.style.animationDuration = (Math.random() * 6 + 4) + 's';
-                
-                // تأخير عشوائي لبدء الحركة
-                star.style.animationDelay = (Math.random() * 3) + 's';
+    <!-- STEP 2: OTP -->
+    <div id="authStep2" style="display:none">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:30px;margin-bottom:10px">🔐</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">أدخل كود التحقق</div>
+        <div style="font-size:12px;color:var(--muted)" id="otpSentTo">تم الإرسال إلى ...</div>
+      </div>
+      <div class="otp-inputs">
+        <input class="otp-inp" maxlength="1" id="o1" oninput="otpNext(this,'o2')">
+        <input class="otp-inp" maxlength="1" id="o2" oninput="otpNext(this,'o3')">
+        <input class="otp-inp" maxlength="1" id="o3" oninput="otpNext(this,'o4')">
+        <input class="otp-inp" maxlength="1" id="o4" oninput="otpNext(this,'o5')">
+        <input class="otp-inp" maxlength="1" id="o5" oninput="otpNext(this,'o6')">
+        <input class="otp-inp" maxlength="1" id="o6" oninput="otpNext(this,null)">
+      </div>
+      <div class="err-msg" id="otpErr">كود خاطئ، حاول مرة أخرى</div>
+      <button class="btn btn-primary" onclick="verifyOTP()">تحقق والدخول</button>
+      <div class="otp-timer" id="otpTimer">يمكنك إعادة الإرسال بعد <b id="timerCount">60</b> ثانية</div>
+      <div class="auth-back" onclick="backToStep1()">← تغيير رقم/إيميل</div>
+    </div>
+  </div>
+</div>
 
-                container.appendChild(star);
-            }
-        }
+<!-- APP -->
+<div class="app" id="appContainer" style="display:none">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand">NEXASTORE</div>
+      <div class="brand-sub">متجر المنتجات الرقمية</div>
+    </div>
+    <div class="nav" id="mainNav">
+      <div class="nav-lbl">المتجر</div>
+      <div class="ni active" data-page="store"><span class="ni-ic">🏪</span> الواجهة الرئيسية</div>
+      <div class="ni" data-page="cart"><span class="ni-ic">🛒</span> السلة <span class="cnt" id="cartCnt">0</span></div>
+      <div class="ni" data-page="myorders"><span class="ni-ic">📋</span> طلباتي</div>
+      <div class="nav-lbl">القانوني</div>
+      <div class="ni" data-page="policy"><span class="ni-ic">📜</span> سياسة الاسترجاع</div>
+      <div class="ni" data-page="privacy"><span class="ni-ic">🔒</span> الخصوصية</div>
+      <div class="ni" data-page="terms"><span class="ni-ic">📋</span> الشروط والأحكام</div>
+      <!-- Admin only -->
+      <div class="admin-gate">
+        <div class="nav-lbl">الإدارة</div>
+        <div class="ni" data-page="dash"><span class="ni-ic">📊</span> لوحة التحكم</div>
+        <div class="ni" data-page="orders"><span class="ni-ic">📦</span> إدارة الطلبات</div>
+        <div class="ni" data-page="products"><span class="ni-ic">🏷️</span> المنتجات</div>
+        <div class="ni" data-page="payments"><span class="ni-ic">💳</span> بوابات الدفع</div>
+      </div>
+    </div>
+    <div class="sidebar-foot">© 2025 <b style="color:var(--accent)">NEXASTORE</b><br>جميع الحقوق محفوظة</div>
+  </div>
 
-        // تشغيل إنشاء النجوم عند تحميل الصفحة
-        window.onload = createStars;
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="pageTitle">واجهة المتجر</div>
+      <div class="topbar-right">
+        <div class="user-chip" onclick="logoutUser()">
+          <div class="user-av" id="userAv">؟</div>
+          <div class="user-name" id="userName">تسجيل الخروج</div>
+        </div>
+      </div>
+    </div>
 
-        function nextPage() {
-            document.getElementById('page1').style.display = 'none';
-            document.getElementById('page2').classList.remove('hidden');
-        }
+    <!-- STORE -->
+    <div class="page active" id="page-store">
+      <div class="hero">
+        <div class="hero-brand">✦ NEXASTORE ✦</div>
+        <div class="hero-title">🚀 منتجاتك الرقمية في مكان واحد</div>
+        <div class="hero-sub">اشتراكات • أكواد • خدمات رقمية • تسليم فوري<br>ادفع بأسياسيل كاش • زين كاش • ماستر كارد</div>
+      </div>
+      <div class="cats" id="catBtns">
+        <button class="cat active" onclick="filterCat(this,'all')">🌐 الكل</button>
+        <button class="cat" onclick="filterCat(this,'sub')">♾️ اشتراكات</button>
+        <button class="cat" onclick="filterCat(this,'code')">🔑 أكواد وبطاقات</button>
+        <button class="cat" onclick="filterCat(this,'service')">⚙️ خدمات</button>
+        <button class="cat" onclick="filterCat(this,'vip')">👑 VIP</button>
+      </div>
+      <div class="prods-grid" id="storeGrid"></div>
+      <div style="text-align:center;font-size:11px;color:var(--muted);padding:10px">
+        ✅ تسليم فوري • 🔒 دفع آمن • 📱 دعم 24/7 عبر تيليجرام
+      </div>
+    </div>
 
-        function showSurprise() {
-            const music = document.getElementById('bgMusic');
-            music.play().catch(e => console.log("Audio play blocked"));
+    <!-- CART -->
+    <div class="page" id="page-cart">
+      <div id="cartView">
+        <div class="ord-num-box">
+          <div class="ord-lbl">رقم طلبك العشوائي</div>
+          <div class="ord-val" id="ordNum">---</div>
+        </div>
 
-            document.getElementById('btnWrapper').style.display = 'none';
-            const finalMsg = document.getElementById('finalMessage');
-            finalMsg.classList.remove('hidden');
-            
-            // نص المعايدة المرتب والمعدل لآيات
-            const text = "ولكل مجتهد نصيب\n\nالف الف مبروك الاعفاء العام آيات وان شاء الله نشوفج باعلى المراتب ومن نجاح الى نجاح وان شاء الله مو اول ولا اخر مره تنعفين وتستمرين بالنجاح ويوم النجاح الاكبر الي هو نجاحج من السادس وتجيبين المعدل الي تريدينه وتفرحين نفسج واهلج واتمنى الج كل التوفيق صح ما صارلي حتى يوم من عرفتج بس حبيت اباركلج بطريقتي الخاصه وبالتوفيق عيوني 💙.";
-            
-            let i = 0;
-            finalMsg.innerHTML = ""; // تأكد من تفريغ المحتوى قبل البدء
+        <div class="section-card">
+          <div class="sec-title">🛒 منتجاتك</div>
+          <div id="cartItemsDisplay"></div>
+          <div style="text-align:left;font-size:16px;font-weight:900;color:var(--gold);margin-top:12px" id="cartTotalDisp"></div>
+        </div>
 
-            function typeWriter() {
-                if (i < text.length) {
-                    // تمييز الجملة الأولى "ولكل مجتهد نصيب" كعنوان
-                    if (i < 19) {
-                        finalMsg.innerHTML = '<span class="header-quote">' + text.substring(0, i + 1) + '</span>';
-                    } else {
-                        // النص المتبقي بعد العنوان
-                        finalMsg.innerHTML = '<span class="header-quote">ولكل مجتهد نصيب</span>' + text.substring(19, i + 1);
-                    }
-                    i++;
-                    setTimeout(typeWriter, 40); // سرعة الكتابة (40 مللي ثانية)
-                    finalMsg.scrollTop = finalMsg.scrollHeight; // التمرير تلقائياً لأسفل
-                }
-            }
-            typeWriter();
-        }
-    </script>
+        <div class="section-card">
+          <div class="sec-title">💳 طريقة الدفع</div>
+          <div class="pay-grid">
+            <div class="pay-opt active" onclick="pickPay(this,'asiacell')">
+              <div class="pay-ic">📱</div><div class="pay-nm">Asiacell</div><div class="pay-sub">كاش</div>
+            </div>
+            <div class="pay-opt" onclick="pickPay(this,'zaincash')">
+              <div class="pay-ic">💚</div><div class="pay-nm">Zain Cash</div><div class="pay-sub">إلكتروني</div>
+            </div>
+            <div class="pay-opt" onclick="pickPay(this,'master')">
+              <div class="pay-ic">💳</div><div class="pay-nm">MasterCard</div><div class="pay-sub">بطاقة</div>
+            </div>
+          </div>
+
+          <div class="sec-title">📦 نوع التسليم</div>
+          <div class="del-grid">
+            <div class="del-opt active" onclick="pickDel(this,'direct')">
+              <div class="del-ic">⚡</div><div class="del-nm">تسليم مباشر</div><div class="del-ds">فوري داخل المنصة</div>
+            </div>
+            <div class="del-opt" onclick="pickDel(this,'telegram')">
+              <div class="del-ic">✈️</div><div class="del-nm">عبر تيليجرام</div><div class="del-ds">يُرسل للبوت تلقائياً</div>
+            </div>
+          </div>
+
+          <div class="sec-title" style="margin-top:4px">📸 رفع إثبات الدفع</div>
+          <div class="upload-area" id="uploadArea" onclick="document.getElementById('proofFile').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDrop(event)">
+            <input type="file" id="proofFile" accept="image/*" onchange="previewProof(event)">
+            <div class="upload-ic">📷</div>
+            <div class="upload-txt">اضغط أو اسحب صورة التحويل هنا</div>
+            <div class="upload-sub">PNG, JPG, WEBP — حد أقصى 5MB</div>
+            <img class="upload-preview" id="proofPreview" alt="Preview">
+          </div>
+          <div class="err-msg" id="uploadErr">يجب رفع صورة إثبات الدفع</div>
+        </div>
+
+        <div class="section-card">
+          <div class="sec-title">📬 بيانات التواصل</div>
+          <div class="fgrp">
+            <label class="flbl">يوزر تيليجرام (مطلوب) *</label>
+            <input class="finp" type="text" placeholder="@username" id="tgUser">
+            <div class="err-msg" id="tgErr">أدخل يوزر تيليجرام</div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">الاسم</label><input class="finp" id="buyerName" placeholder="اسمك الكريم"></div>
+            <div class="fgrp"><label class="flbl">رقم الهاتف</label><input class="finp" id="buyerPhone" placeholder="07XXXXXXXXX"></div>
+          </div>
+          <div class="tg-bot-bar">
+            <div class="tg-bot-t">🤖 ربط البوت على تيليجرام</div>
+            <div class="tg-bot-d">بعد تأكيد الطلب، يصل إشعار فوري للبوت يتضمن: رقم الطلب، يوزرك، المنتج، طريقة الدفع، وصورة التحويل.</div>
+          </div>
+          <button class="btn btn-primary" id="submitBtn" onclick="submitOrder()">
+            ✅ تأكيد الطلب وإرساله للبوت
+          </button>
+        </div>
+      </div>
+
+      <div class="success-wrap" id="successView" style="display:none">
+        <div class="success-ic">🎉</div>
+        <div class="success-t">تم استلام طلبك بنجاح!</div>
+        <div class="success-ord" id="successOrdNum"></div>
+        <div class="success-d" id="successDesc"></div>
+        <div class="tg-cta" onclick="window.open('https://t.me/YOUR_BOT_USERNAME','_blank')">
+          <span style="font-size:26px">✈️</span>
+          <div>
+            <div style="font-size:13px;font-weight:700">تواصل معنا على تيليجرام</div>
+            <div style="font-size:11px;opacity:.8">اضغط للانتقال للبوت</div>
+          </div>
+        </div>
+        <button class="btn btn-outline" style="max-width:300px;margin:14px auto 0" onclick="navigate('store')">العودة للمتجر</button>
+      </div>
+    </div>
+
+    <!-- MY ORDERS -->
+    <div class="page" id="page-myorders">
+      <div class="section-card">
+        <div class="sec-title">📋 طلباتي</div>
+        <div id="myOrdersList"><div style="text-align:center;color:var(--muted);padding:30px">جاري تحميل طلباتك...</div></div>
+      </div>
+    </div>
+
+    <!-- ADMIN: DASHBOARD -->
+    <div class="page admin-gate" id="page-dash">
+      <div class="stats-grid">
+        <div class="stat-c"><div class="stat-lbl">إجمالي الطلبات</div><div class="stat-val purple" id="statTotal">0</div><div class="stat-delta">إجمالي كل الطلبات</div></div>
+        <div class="stat-c"><div class="stat-lbl">معلقة</div><div class="stat-val gold" id="statPend">0</div><div style="font-size:11px;color:var(--gold);margin-top:5px">تحتاج مراجعة</div></div>
+        <div class="stat-c"><div class="stat-lbl">مكتملة</div><div class="stat-val green" id="statDone">0</div><div class="stat-delta">تم التسليم</div></div>
+        <div class="stat-c"><div class="stat-lbl">الإيرادات (IQD)</div><div class="stat-val teal" id="statRev">0</div><div class="stat-delta">إجمالي المبيعات</div></div>
+      </div>
+      <div class="section-card">
+        <div class="sec-title">آخر الطلبات الواردة</div>
+        <div class="tbl-wrap"><table class="tbl" id="dashRecentTbl">
+          <tr><th>الرقم</th><th>يوزر</th><th>المنتج</th><th>الدفع</th><th>المبلغ</th><th>الحالة</th></tr>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ADMIN: ORDERS -->
+    <div class="page admin-gate" id="page-orders">
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div class="sec-title" style="margin:0">إدارة الطلبات</div>
+          <div style="display:flex;gap:8px">
+            <select class="finp" style="width:auto;font-size:12px;padding:6px 10px" id="filterStatus" onchange="loadOrders()">
+              <option value="">كل الطلبات</option>
+              <option value="pending">معلق</option>
+              <option value="done">مكتمل</option>
+              <option value="cancelled">ملغي</option>
+            </select>
+          </div>
+        </div>
+        <div class="tbl-wrap"><table class="tbl" id="ordersTbl">
+          <tr><th>الرقم</th><th>يوزر تيليجرام</th><th>المنتج</th><th>الدفع</th><th>التسليم</th><th>المبلغ</th><th>إثبات</th><th>الحالة</th><th>إجراء</th></tr>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ADMIN: PRODUCTS -->
+    <div class="page admin-gate" id="page-products">
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div class="sec-title" style="margin:0">إدارة المنتجات</div>
+          <button class="btn btn-primary btn-sm" onclick="showAddProduct()">+ إضافة منتج</button>
+        </div>
+        <div id="addProductForm" style="display:none;background:var(--bg);border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid var(--border)">
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">اسم المنتج</label><input class="finp" id="newProdName" placeholder="اسم المنتج"></div>
+            <div class="fgrp"><label class="flbl">السعر (IQD)</label><input class="finp" id="newProdPrice" type="number" placeholder="15000"></div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">التصنيف</label>
+              <select class="finp" id="newProdCat"><option value="sub">اشتراكات</option><option value="code">أكواد</option><option value="service">خدمات</option><option value="vip">VIP</option></select>
+            </div>
+            <div class="fgrp"><label class="flbl">الإيموجي</label><input class="finp" id="newProdIcon" placeholder="🎬" maxlength="2"></div>
+          </div>
+          <div class="fgrp"><label class="flbl">الوصف</label><input class="finp" id="newProdDesc" placeholder="وصف مختصر للمنتج"></div>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <button class="btn btn-primary btn-sm" onclick="saveProduct()">حفظ المنتج</button>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('addProductForm').style.display='none'">إلغاء</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px" id="adminProdsGrid"></div>
+      </div>
+    </div>
+
+    <!-- ADMIN: PAYMENTS -->
+    <div class="page admin-gate" id="page-payments">
+      <div class="section-card" style="max-width:560px">
+        <div class="sec-title">⚙️ إعدادات بوابات الدفع</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:10px">📱 Asiacell Cash</div>
+            <div class="fgrp"><label class="flbl">رقم الحساب</label><input class="finp" id="payAsiacell" placeholder="07712345678"></div>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:10px">💚 Zain Cash</div>
+            <div class="fgrp"><label class="flbl">رقم الحساب</label><input class="finp" id="payZain" placeholder="07812345678"></div>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:10px">💳 MasterCard</div>
+            <div class="fgrp"><label class="flbl">رقم البطاقة</label><input class="finp" id="payMaster" placeholder="XXXX XXXX XXXX XXXX"></div>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border)">
+            <div style="font-size:13px;font-weight:700;margin-bottom:10px">✈️ بوت تيليجرام</div>
+            <div class="fgrp"><label class="flbl">توكن البوت (Bot Token)</label><input class="finp" id="tgBotToken" placeholder="1234567890:AABBccDDeeff..."></div>
+            <div class="fgrp"><label class="flbl">Chat ID (معرّف المحادثة)</label><input class="finp" id="tgChatId" placeholder="-100XXXXXXXXXX"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px" onclick="savePaySettings()">💾 حفظ الإعدادات</button>
+      </div>
+    </div>
+
+    <!-- MY ORDERS / POLICY / PRIVACY / TERMS pages -->
+    <div class="page" id="page-policy">
+      <div class="section-card" style="max-width:680px">
+        <div class="sec-title" style="font-size:17px;color:var(--accent2)">📜 سياسة الاسترجاع والإلغاء</div>
+        <div class="policy-sec"><h3>1. الاسترجاع</h3><p>يحق للعميل طلب الاسترجاع خلال 24 ساعة من تاريخ الشراء، شريطة عدم استخدام المنتج. تُعالَج الطلبات خلال 3-5 أيام عمل.</p></div>
+        <div class="policy-sec"><h3>2. المنتجات الرقمية</h3><p>المنتجات الرقمية والأكواد غير قابلة للاسترجاع بعد التسليم والتفعيل، إلا في حالة خلل تقني مُثبَت من NEXASTORE.</p></div>
+        <div class="policy-sec"><h3>3. الإلغاء</h3><p>يمكن إلغاء الطلب قبل التسليم فقط. بعد بدء التسليم يخضع للسياسة العامة أعلاه.</p></div>
+        <div class="footer-cr">© 2025 جميع الحقوق محفوظة لـ <b>NEXASTORE</b> • يُحظر إعادة النشر</div>
+      </div>
+    </div>
+    <div class="page" id="page-privacy">
+      <div class="section-card" style="max-width:680px">
+        <div class="sec-title" style="font-size:17px;color:var(--accent2)">🔒 سياسة الخصوصية</div>
+        <div class="policy-sec"><h3>1. البيانات التي نجمعها</h3><p>نجمع فقط البيانات الضرورية: يوزر تيليجرام، رقم الهاتف (اختياري)، ونوع المنتج المشترى. لا نجمع بيانات حساسة إضافية.</p></div>
+        <div class="policy-sec"><h3>2. استخدام البيانات</h3><p>تُستخدم بياناتك حصراً لإتمام الطلب والتواصل معك. لن تُباع أو تُشارك مع أي طرف ثالث.</p></div>
+        <div class="policy-sec"><h3>3. الحماية</h3><p>نستخدم تشفيراً عالياً لحماية بياناتك. يحق لك طلب حذف بياناتك عبر التواصل معنا.</p></div>
+        <div class="footer-cr">© 2025 <b>NEXASTORE</b> • خصوصيتك أولويتنا</div>
+      </div>
+    </div>
+    <div class="page" id="page-terms">
+      <div class="section-card" style="max-width:680px">
+        <div class="sec-title" style="font-size:17px;color:var(--accent2)">📋 الشروط والأحكام</div>
+        <div class="policy-sec"><h3>1. قبول الشروط</h3><p>باستخدامك هذا المتجر وإتمام أي عملية شراء، فإنك توافق على جميع الشروط المذكورة.</p></div>
+        <div class="policy-sec"><h3>2. المسؤولية</h3><p>المتجر غير مسؤول عن أي ضرر ناتج عن سوء استخدام المنتجات الرقمية المشتراة.</p></div>
+        <div class="policy-sec"><h3>3. حقوق النشر</h3><p>جميع محتويات NEXASTORE محمية. يُمنع نسخ أو إعادة توزيع أي محتوى دون إذن.</p></div>
+        <div class="policy-sec"><h3>4. حل النزاعات</h3><p>في حالة أي نزاع يتم التواصل عبر تيليجرام للوصول إلى حل ودي خلال 48 ساعة.</p></div>
+        <div class="footer-cr">© 2025 جميع الحقوق محفوظة لـ <b>NEXASTORE</b></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
